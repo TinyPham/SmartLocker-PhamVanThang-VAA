@@ -1,0 +1,3390 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SMART LOCKER</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #ffffff;
+    }
+
+    .tick-image {
+      width: 300px;
+      height: auto;
+      margin-left: auto;
+      margin-right: auto;
+      }
+
+      .locker-image {
+      width: 200px;
+      height: auto;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+      }
+
+    h2 {
+      color: #000000;
+      font-size: 25px
+      
+    }
+
+    h4 {
+      color: #ff0000;
+      font-size: 15px
+      
+    }
+
+    section.main {
+      display: flex
+    }
+
+    #menu,
+    section.main {
+      flex-direction: column
+    }
+
+    #menu {
+      display: none;
+      flex-wrap: nowrap;
+      min-width: 340px;
+      justify-content: center;
+      background: #fff701;
+      color: #081dd7;
+      text-align: justify;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 20px;
+
+    }
+
+    .notification {
+      justify-content: center;
+      color: #000000;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 50px;
+    }
+
+    #content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch
+    }
+
+    figure {
+      padding: 0px;
+      margin: 0;
+      -webkit-margin-before: 0;
+      margin-block-start: 0;
+      -webkit-margin-after: 0;
+      margin-block-end: 0;
+      -webkit-margin-start: 0;
+      margin-inline-start: 0;
+      -webkit-margin-end: 0;
+      margin-inline-end: 0
+    }
+
+
+
+    @media (min-width: 800px) and (orientation:landscape) {
+      #content {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch
+      }
+
+      figure img {
+        display: block;
+        max-width: 100%;
+        max-height: calc(100vh - 40px);
+        width: auto;
+        height: auto
+      }
+
+      figure {
+        padding: 0 0 0 0px;
+        margin: 0;
+        -webkit-margin-before: 0;
+        margin-block-start: 0;
+        -webkit-margin-after: 0;
+        margin-block-end: 0;
+        -webkit-margin-start: 0;
+        margin-inline-start: 0;
+        -webkit-margin-end: 0;
+        margin-inline-end: 0
+      }
+    }
+
+    section#buttons {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between
+    }
+
+    #nav-toggle {
+      cursor: pointer;
+      display: block
+    }
+
+    #nav-toggle-cb {
+      outline: 0;
+      opacity: 0;
+      width: 0;
+      height: 0
+    }
+
+    #nav-toggle-cb:checked+#menu {
+      display: flex
+    }
+
+    .input-group {
+      display: flex;
+      flex-wrap: nowrap;
+      line-height: 22px;
+      margin: 5px 0
+    }
+
+    .input-group>label {
+      display: inline-block;
+      padding-right: 10px;
+      min-width: 47%
+    }
+
+    .input-group input,
+    .input-group select {
+      flex-grow: 1
+    }
+
+    .range-max,
+    .range-min {
+      display: inline-block;
+      padding: 0 5px
+    }
+
+    button {
+      display: block;
+      margin: 5px;
+      padding: 0 12px;
+      border: 0;
+      line-height: 28px;
+      cursor: pointer;
+      color: #fff;
+      background: #7004eb;
+      border-radius: 5px;
+      font-size: 16px;
+      outline: 0
+    }
+
+    button:hover {
+      background: #646363
+    }
+
+    button:active {
+      background: #57b440
+    }
+
+    button.disabled {
+      cursor: default;
+      background: #a0a0a0
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 22px;
+      background: #363636;
+      cursor: pointer;
+      margin: 0
+    }
+
+    input[type=range]:focus {
+      outline: 0
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 2px;
+      cursor: pointer;
+      background: #EFEFEF;
+      border-radius: 0;
+      border: 0 solid #EFEFEF
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      border: 1px solid rgba(0, 0, 30, 0);
+      height: 22px;
+      width: 22px;
+      border-radius: 50px;
+      background: #ff3034;
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -11.5px
+    }
+
+    input[type=range]:focus::-webkit-slider-runnable-track {
+      background: #EFEFEF
+    }
+
+    input[type=range]::-moz-range-track {
+      width: 100%;
+      height: 2px;
+      cursor: pointer;
+      background: #EFEFEF;
+      border-radius: 0;
+      border: 0 solid #EFEFEF
+    }
+
+    input[type=range]::-moz-range-thumb {
+      border: 1px solid rgba(0, 0, 30, 0);
+      height: 22px;
+      width: 22px;
+      border-radius: 50px;
+      background: #ff3034;
+      cursor: pointer
+    }
+
+    input[type=range]::-ms-track {
+      width: 100%;
+      height: 2px;
+      cursor: pointer;
+      background: 0 0;
+      border-color: transparent;
+      color: transparent
+    }
+
+    input[type=range]::-ms-fill-lower {
+      background: #EFEFEF;
+      border: 0 solid #EFEFEF;
+      border-radius: 0
+    }
+
+    input[type=range]::-ms-fill-upper {
+      background: #EFEFEF;
+      border: 0 solid #EFEFEF;
+      border-radius: 0
+    }
+
+    input[type=range]::-ms-thumb {
+      border: 1px solid rgba(0, 0, 30, 0);
+      height: 22px;
+      width: 22px;
+      border-radius: 50px;
+      background: #ff3034;
+      cursor: pointer;
+      height: 2px
+    }
+
+    input[type=range]:focus::-ms-fill-lower {
+      background: #EFEFEF
+    }
+
+    input[type=range]:focus::-ms-fill-upper {
+      background: #363636
+    }
+
+    .switch {
+      display: block;
+      position: relative;
+
+      line-height: 22px;
+      font-size: 16px;
+      height: 22px
+    }
+
+    .switch input {
+      outline: 0;
+      opacity: 0;
+      width: 0;
+      height: 0
+    }
+
+    .slider {
+      width: 50px;
+      height: 22px;
+      align-items: right;
+      border-radius: 22px;
+      cursor: pointer;
+      background-color: grey
+    }
+
+    .slider,
+    .slider:before {
+      display: inline-block;
+      transition: .4s
+    }
+
+    .slider:before {
+      position: relative;
+      content: "";
+      border-radius: 50%;
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      top: 3px;
+      background-color: #fff
+    }
+
+    input:checked+.slider {
+      background-color: #ff3034
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      transform: translateX(26px)
+    }
+
+    select {
+      border: 1px solid #363636;
+      font-size: 14px;
+      height: 22px;
+      outline: 0;
+      border-radius: 5px
+    }
+
+    .image-container {
+      position: relative;
+      min-width: 160px
+    }
+
+    .close {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      background: #ff3034;
+      width: 16px;
+      height: 16px;
+      border-radius: 100px;
+      color: #fff;
+      text-align: center;
+      line-height: 18px;
+      cursor: pointer
+    }
+
+    .hidden {
+      display: none
+    }
+
+    @keyframes color-transition {
+      0% {
+        color: red;
+      }
+
+      20% {
+        color: rgb(255, 136, 0);
+      }
+
+      50% {
+        color: blue;
+      }
+
+      60% {
+        color: rgb(0, 255, 42);
+      }
+
+      80% {
+        color: rgb(0, 0, 0);
+      }
+
+      90% {
+        color: rgb(0, 0, 0);
+      }
+
+      100% {
+        color: rgb(0, 0, 0);
+      }
+    }
+
+    @keyframes scale-animation {
+      0% {
+        transform: scale(0.8);
+      }
+
+      50% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(0.8);
+      }
+    }
+
+    p {
+      animation: color-transition 2s infinite, scale-animation 6s infinite;
+      font-family: Arial, sans-serif;
+      font-size: 40px;
+    }
+
+    .container {
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .button {
+      border: 3px solid black;
+      /* Đặt viền đen cho nút */
+      display: inline-block;
+      padding: 30px 30px;
+      font-size: 40px;
+      color: #000;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-right: 20px;
+      margin-left: 20px;
+    }
+
+    .button.green {
+      background-color: #0f0;
+    }
+
+    .button.yellow {
+      background-color: #ff0;
+    }
+
+    .button.locker {
+      background-color: rgb(6, 250, 6);
+      font-size: 40px;
+      width: 80px;
+      height: 80px;
+      padding: 5px 5px;
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+
+    .button.locker:hover {
+      background-color: rgb(0, 171, 0);
+    }
+
+    .button.locker:disabled {
+      background-color: rgb(231, 0, 0);
+    }
+
+    .button.receive1 {
+      background-color: rgb(250, 250, 0);
+      color: #000000;
+      padding: 10px 10px;
+      font-size: 20px;
+      width: 150px;
+      height: 80px;
+    }
+
+    .button.receive1:hover {
+      background-color: rgb(138, 229, 138);
+    }
+
+    .button.receive1:disabled {
+      background-color: rgb(231, 0, 0);
+    }
+
+    .button.receive2 {
+      background-color: rgb(250, 250, 0);
+      padding: 10px 10px;
+      font-size: 20px;
+      width: 150px;
+      height: 80px;
+    }
+
+    .button.receive2:hover {
+      background-color: rgb(138, 229, 138);
+    }
+
+    .button.receive2:disabled {
+      background-color: rgb(231, 0, 0);
+    }
+
+
+    .button.chooseFace {
+      background-color: rgb(255, 95, 27);
+      color: #ffffff;
+      padding: 10px 10px;
+      font-size: 20px;
+      width: 150px;
+      height: 80px;
+    }
+
+    .button.chooseFace:hover {
+      background-color: rgb(138, 229, 138);
+    }
+
+    .button.chooseFace:disabled {
+      background-color: rgb(231, 0, 0);
+    }
+
+    .button.chooseQr {
+      background-color: rgb(255, 95, 27);
+      color: #ffffff;
+      padding: 10px 10px;
+      font-size: 20px;
+      width: 150px;
+      height: 80px;
+
+    }
+
+    .button.chooseQr:hover {
+      background-color: rgb(138, 229, 138);
+    }
+
+    .button.chooseQr:disabled {
+      background-color: rgb(231, 0, 0);
+    }
+
+    .button.generateQr {
+      background-color: rgb(255, 252, 251);
+    }
+
+    .button.generateQr:hover {
+      background-color: rgb(251, 251, 251);
+    }
+
+    .button.generateQr:disabled {
+      background-color: rgb(231, 0, 0);
+    }
+
+    .options {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .options button {
+      margin-right: 10px;
+    }
+
+    .back-button {
+      display: none;
+      margin-top: 10px;
+      font-size: 30px;
+      width: 60px;
+      height: 60px;
+      padding: 5px 5px;
+      background-color: rgb(4, 0, 255);
+    }
+
+    .back-button2 {
+      display: none;
+      margin-top: 10px;
+      font-size: 30px;
+      width: 60px;
+      height: 60px;
+      padding: 5px 5px;
+      background-color: rgb(4, 0, 255);
+    }
+
+    .note {
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .box-red {
+      width: 40px;
+      height: 40px;
+      background-color: #ff0000;
+      align-items: center;
+      margin-left: 50px;
+    }
+
+    .box-green {
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      background-color: #00ff22;
+      margin-left: 60px;
+    }
+
+    .text {
+      margin-left: 15px;
+      font-size: 30px;
+      color: #000;
+    }
+
+
+:root{
+    --bcg-color:#001122;
+    --primary-color:#155e75;
+    --border-radius:8px;
+    --secondary-color:#fff;
+    --border-color:#7fb7c9;
+}
+
+.wapper{
+    background-color: rgb(226, 242, 8);
+    
+    padding: 30px;
+    width: 500px;
+    border-radius: var(--border-radius);
+    min-height: 300px;
+    height: auto;
+}
+.wapper h1{
+    font-size: 30px;
+    text-align: center;
+    color:  rgb(222, 68, 21);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.wapper h2{
+    font-size: 20px;
+    text-align: center;
+    color:  rgb(7, 6, 5);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.wapper label{
+    color: rgb(13, 72, 221);
+    font-size: 20px;
+}
+
+.wapper select{
+    font-size: 20px;
+}
+
+.wapper div{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+}
+.footer-qr{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.header-qr{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.footer-qr a{
+    background-color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 20px;
+    padding: 15px 35px;
+    margin-inline: 2px;
+    color: var(--primary-color);
+    font-weight: 600px;
+    border-radius: var(--border-radius);
+}
+.qr-body{ 
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+.qr-body img{
+    max-width: 100%;
+    max-height: 100%;
+    margin-block: 10px;
+    padding: 20px;
+    border: solid 0.5px var(--border-color);
+}
+@media screen and (max-width:520px){
+    .box{
+        width: 80%;
+    }
+    .qr-footer a{
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+
+.glow-effect {
+            font-size: 30px;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffffff, 0 0 40px #ffffff, 0 0 55px #ffffff, 0 0 75px #ffffff;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #f6ff00, 0 0 30px #eeff00, 0 0 40px #e1ff00, 0 0 55px #eaff00, 0 0 75px #ffff00, 0 0 90px #ffea00;
+            }
+        }
+        @keyframes wave {
+            0% {
+              transform: translateY(0);
+            }
+            25% {
+              transform: translateY(-20px);
+            }
+
+            50% {
+              transform: translateY(0);
+            }
+
+            75% {
+              transform: translateY(20px);
+            }
+
+            100% {
+              transform: translateY(0);
+            }
+        }   
+
+  .wave-text {
+    display: inline-block;
+    animation: wave 3s infinite;
+  }
+  
+  .unlockPriority {
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .unlocker1{
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 15.5%;
+    left: 46.6%;
+    transform: translate(-50%, -50%);
+  }
+
+  .unlocker2{
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 15.5%;
+    left: 53.5%;
+    transform: translate(-50%, -50%);
+  }
+
+  .unlocker3{
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 32.4%;
+    left: 46.6%;
+    transform: translate(-50%, -50%);
+  }
+
+  .unlocker4{
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 32.4%;
+    left: 53.5%;
+    transform: translate(-50%, -50%);
+  }
+
+  input[type="text"] {
+      width: 100px; /* Thiết lập chiều dài ô nhập liệu */
+    }
+
+    .units { font-size: 1.0rem; }
+
+    .button.sendpass {
+      background-color: rgb(17, 0, 255);
+      font-size: 15px;
+      width: 40px;
+      color: rgb(255, 255, 255);
+      height: 40px;
+      padding: 5px 5px;
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <br> <!-- Thêm dòng này để tạo một dòng mới -->
+    <h2 id="greeting" class="wave-text">SMART LOCKER</h2>
+    <h2 id="thankyou">XIN CHÀO QUÝ KHÁCH!</h2>
+    <img  id="img-locker" class="locker-image" src="https://i.postimg.cc/1tHF2mkw/LOCKER.png">
+    <br> <!-- Thêm dòng này để tạo một dòng mới -->
+    <img class="unlockPriority" id = "emergency" onclick="showEmergencyOptions()" src="https://media.istockphoto.com/id/958429158/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-kh%C3%B3a-%E1%BB%95-kh%C3%B3a-vector-k%C3%BD-hi%E1%BB%87u-b%E1%BA%A3o-m%E1%BA%ADt-d%E1%BA%A5u-hi%E1%BB%87u-kh%C3%B3a-minh-h%E1%BB%8Da-b%E1%BA%A3o-v%E1%BB%87.jpg?s=170667a&w=0&k=20&c=8QB67jdVPd--ijKVPmUNv7Cnr3ITXVrpBIydU4EoucI=">
+    
+    <button class="button green" onclick="showSendOptions()">Gửi đồ</button>
+    <button class="button yellow" onclick="showRetrieveOptions()">Lấy đồ</button>
+    
+    <div class="options" id="chooseOptions" style="display: none;">
+      <h2 class="glow-effect">Vui lòng chọn phương thức đăng ký</h2>
+      <button class="button chooseFace" onclick="chooseFaceOptions()">FACE ID</button>
+      <button class="button chooseQr" onclick="chooseQrOptions()">QR CODE</button>
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <button class="button back-button2" onclick="goHome()">&#127968</button>
+    </div>
+
+    <div class="wapper" id="generateQr" style="display: none;">
+            <h1>Tạo mã QR Code</h1>
+            <h2>Vui lòng chụp lại mã QR sau</h2>
+            <div id="countdown"></div>
+            <div id="QrText"></div>
+        <div class="header-qr"></div>
+        <div class="body-qr"></div>
+        <div class="footer-qr">
+          <button id="generate" class="button generateQr" onclick="generateQRCode()">Tạo QR Code</button>
+        </div>
+        <br> <!-- Thêm dòng này để tạo một dòng mới -->
+        <button class="button back-button" onclick="if(a != 0 && b == 0) goBackFromSendQr(); else  goBackFromReceive()">←</button>
+        <button class="button back-button" onclick="goHome()">&#127968</button>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+      
+    <div class="options" id="sendFaceOptions">
+      <p>Vui lòng chọn tủ bạn muốn gửi đồ</p>
+      <div class="note">
+        <div class="box-green"></div>
+        <span class="text">Còn trống</span>
+        <div class="box-red"></div>
+        <span class="text">Đã sử dụng</span>
+      </div>
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <button id="locker1" class="button locker" onclick="a = 1;b = 0;openFaceID('LOCKER_1')">1</button>
+      <button id="locker2" class="button locker" onclick="a = 2;b = 0;openFaceID('LOCKER_2')">2</button><br>
+      <button id="locker3" class="button locker" onclick="a = 3;b = 0;openFaceID('LOCKER_3')">3</button>
+      <button id="locker4" class="button locker" onclick="a = 4;b = 0;openFaceID('LOCKER_4')">4</button>
+
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+
+      <button class="button back-button" onclick="goHome()">&#127968</button>
+    </div>
+    
+    
+
+    <div class="options" id="password-options" style="display: none;">
+        <tr>
+          <td><span class="emergency-text">MỞ CỬA KHẨN CẤP: </span></td>   
+          <td>
+              <input type="text" id = "inputPassword" placeholder="Nhập mật khẩu!" autocomplete="off">
+              <sup class="units">password</sup>
+              <button class="button sendpass" onclick="sendPassword()">Gửi</button>
+              <h4 id="errorMessage"></h4>
+              <br> <!-- Thêm dòng này để tạo một dòng mới -->
+              <button class="button back-button" onclick="goHome()">&#127968</button>
+          </td>
+        </tr>
+        <br>
+    </div>
+
+    <div class="optionsOpenLockerEmergency" id="unlock-options" style="display: none;">
+      <img  id="img-locker" class="locker-image" src="https://i.postimg.cc/1tHF2mkw/LOCKER.png">
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <img class="unlocker1" id = "unlocker1E" onclick="unlockerNumber1()" src="https://img.freepik.com/darmowe-wektory/ilustracja-ikony-klodki_53876-5633.jpg?w=2000">
+      <img class="unlocker2" id = "unlocker2E" onclick="unlockerNumber2()" src="https://img.freepik.com/darmowe-wektory/ilustracja-ikony-klodki_53876-5633.jpg?w=2000">
+      <img class="unlocker3" id = "unlocker3E" onclick="unlockerNumber3()" src="https://img.freepik.com/darmowe-wektory/ilustracja-ikony-klodki_53876-5633.jpg?w=2000">  
+      <img class="unlocker4" id = "unlocker4E" onclick="unlockerNumber4()" src="https://img.freepik.com/darmowe-wektory/ilustracja-ikony-klodki_53876-5633.jpg?w=2000">
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <button class="button back-button" onclick="goHome()">&#127968</button>
+    </div>
+
+    <div class="options" id="sendQrOptions">
+      <p>Vui lòng chọn tủ bạn muốn gửi đồ</p>
+      <div class="note">
+        <div class="box-green"></div>
+        <span class="text">Còn trống</span>
+        <div class="box-red"></div>
+        <span class="text">Đã sử dụng</span>
+      </div>
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <button id="locker1qr" class="button locker" onclick="a = 1;b = 0;c = 1;d = 1;openQrCode('LOCKER_1')">1</button>
+      <button id="locker2qr" class="button locker" onclick="a = 2;b = 0;c = 1;d = 2;openQrCode('LOCKER_2')">2</button><br>
+      <button id="locker3qr" class="button locker" onclick="a = 3;b = 0;c = 1;d = 3;openQrCode('LOCKER_3')">3</button>
+      <button id="locker4qr" class="button locker" onclick="a = 4;b = 0;c = 1;d = 4;openQrCode('LOCKER_4')">4</button>
+
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+
+      <button class="button back-button" onclick="goHome()">&#127968</button>
+    </div>
+
+    <div class="options" id="options-face" style="display: none;">
+      <div id="content">
+        <div id="sidebar">
+          <input type="checkbox" id="nav-toggle-cb" checked="checked">
+          <nav id="menu">
+            <div class="input-group" id="framesize-group">
+              <label for="framesize">Resolution</label>
+              <select id="framesize" class="default-action">
+                <option value="10">UXGA(1600x1200)</option>
+                <option value="9">SXGA(1280x1024)</option>
+                <option value="8">XGA(1024x768)</option>
+                <option value="7">SVGA(800x600)</option>
+                <option value="6">VGA(640x480)</option>
+                <option value="5">CIF(400x296)</option>
+                <option value="4"selected="selected">QVGA(320x240)</option>
+                <option value="3">HQVGA(240x176)</option>
+                <option value="0">QQVGA(160x120)</option>
+              </select>
+            </div>
+            <div class="input-group" id="hmirror-group">
+              <label for="hmirror">H-Mirror</label>
+              <div class="switch">
+                <input id="hmirror" type="checkbox" class="default-action" checked="checked">
+                <label class="slider" for="hmirror"></label>
+              </div>
+            </div>
+            <div class="input-group" id="face_detect-group">
+              <label for="face_detect">Face Detection</label>
+              <div class="switch">
+                <input id="face_detect" type="checkbox" class="default-action">
+                <label class="slider" for="face_detect"></label>
+              </div>
+            </div>
+            <div class="input-group" id="face_recognize-group">
+              <label for="face_recognize">Face Recognition</label>
+              <div class="switch">
+                <input id="face_recognize" type="checkbox" class="default-action">
+                <label class="slider" for="face_recognize"></label>
+              </div>
+            </div>
+            <section id="buttons">
+              <button id="toggle-stream">Start Stream</button>
+              <button id="face_enroll" class="disabled" disabled="disabled">Enroll Face</button>
+            </section>
+          </nav>
+        </div>
+        <figure>
+          <div id="stream-container" class="image-container hidden">
+            <div class="close" id="close-stream">STREAM</div>
+            <img id="stream" src="">
+          </div>
+        </figure>
+      </div>
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <button class="button back-button"
+        onclick="if(a != 0 && b == 0) goBackFromSendFace(); else  goBackFromReceive()">←</button>
+      <button class="button back-button" onclick="goHome()">&#127968</button>
+    </div>
+
+    <div class="qrReader" id="qrCamera" style="display: none;">
+      <h2>Vui lòng đưa mã QR vào khung hình</h2>
+      <img src="" id="qrstream">
+      <br>
+      <p>QR Code Scan Result :</p>
+        <div style="padding: 5px; border: 3px solid #075264; text-align: center; width: 70%; margin: auto; color:#0A758F;" id="showqrcodeval"></div>
+      <br>
+      <button class="button back-button" onclick="showRetrieveOptions()">←</button>
+      <button class="button back-button" onclick="goHome2()">&#127968</button>
+    </div>
+
+    <div class="options" id="retrieveOptions" style="display: none;">
+      <h2 class="glow-effect">Vui lòng chọn phương thức xác minh</h2>
+      <button class="button receive1" onclick="a = 0; b = 1;receiveFaceID('CHECKFACE')">FACE ID</button>
+      <button class="button receive2" onclick="a = 0; b = 2;receiveQrCode()">QR CODE</button>
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <br> <!-- Thêm dòng này để tạo một dòng mới -->
+      <button class="button back-button2" onclick="goHome()">&#127968</button>
+    </div>
+    <br> <!-- Thêm dòng này để tạo một dòng mới -->
+    <img  id="ticks" class="tick-image" style="display: none;"
+    src="https://gifdb.com/images/high/correct-verified-green-circle-check-mark-a8cbemi51csojpmt.gif">
+
+    <br> <!-- Thêm dòng này để tạo một dòng mới -->
+    <div id="notificationTx1" class="notification" style="display: none;">Vui lòng đến tủ số 1 gửi đồ</div>
+    <div id="notificationTx2" class="notification" style="display: none;">Vui lòng đến tủ số 2 gửi đồ</div>
+    <div id="notificationTx3" class="notification" style="display: none;">Vui lòng đến tủ số 3 gửi đồ</div>
+    <div id="notificationTx4" class="notification" style="display: none;">Vui lòng đến tủ số 4 gửi đồ</div>
+
+    <div id="notificationRx1" class="notification" style="display: none;">Vui lòng đến tủ số 1 nhận đồ</div>
+    <div id="notificationRx2" class="notification" style="display: none;">Vui lòng đến tủ số 2 nhận đồ</div>
+    <div id="notificationRx3" class="notification" style="display: none;">Vui lòng đến tủ số 3 nhận đồ</div>
+    <div id="notificationRx4" class="notification" style="display: none;">Vui lòng đến tủ số 4 nhận đồ</div>
+  </div>
+
+  <script>
+
+    let lockerval = -1;
+    let disablelockerval = "0000";
+    let qrcodeval = "...";
+    var myTmr;
+    start_timer();
+
+    /*--------------------------------XỬ LÝ SỰ KIỆN------------------------------*/
+    document.addEventListener('DOMContentLoaded', function (event) {
+      var baseHost = document.location.origin
+      var streamUrl = baseHost + ':81'
+      const hide = el => {
+        el.classList.add('hidden')
+      }
+      const show = el => {
+        el.classList.remove('hidden')
+      }
+
+      const disable = el => {
+        el.classList.add('disabled')
+        el.disabled = true
+      }
+
+      const enable = el => {
+        el.classList.remove('disabled')
+        el.disabled = false
+      }
+
+      const updateValue = (el, value, updateRemote) => {
+        updateRemote = updateRemote == null ? true : updateRemote
+        let initialValue
+        if (el.type === 'checkbox') {
+          initialValue = el.checked
+          value = !!value
+          el.checked = value
+        } else {
+          initialValue = el.value
+          el.value = value
+        }
+
+        if (updateRemote && initialValue !== value) {
+          updateConfig(el);
+        } else if (!updateRemote) {
+          if (el.id === "face_recognize") {
+            value ? enable(enrollButton) : disable(enrollButton)
+          }
+        }
+      }
+
+      function updateConfig(el) {
+        let value
+        switch (el.type) {
+          case 'checkbox':
+            value = el.checked ? 1 : 0
+            break
+          case 'range':
+          case 'select-one':
+            value = el.value
+            break
+          case 'button':
+          case 'submit':
+            value = '1'
+            break
+          default:
+            return
+        }
+
+        const query = `${baseHost}/control?var=${el.id}&val=${value}`
+
+        fetch(query)
+          .then(response => {
+            console.log(`request to ${query} finished, status: ${response.status}`)
+          })
+      }
+
+      document
+        .querySelectorAll('.close')
+        .forEach(el => {
+          el.onclick = () => {
+            hide(el.parentNode)
+          }
+        })
+
+      //read initial values
+      fetch(`${baseHost}/status`)
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (state) {
+          document
+            .querySelectorAll('.default-action')
+            .forEach(el => {
+              updateValue(el, state[el.id], false)
+            })
+        })
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const enrollButton = document.getElementById('face_enroll')
+      const closeButton = document.getElementById('close-stream')
+
+      const stopStream = () => {
+        window.stop();
+        streamButton.innerHTML = 'Start Stream'
+      }
+
+      const startStream = () => {
+        view.src = `${streamUrl}/stream`
+        show(viewContainer)
+        streamButton.innerHTML = 'Stop Stream'
+      }
+
+
+      closeButton.onclick = () => {
+        stopStream()
+        hide(viewContainer)
+      }
+
+      streamButton.onclick = () => {
+        const streamEnabled = streamButton.innerHTML === 'Stop Stream'
+        if (streamEnabled) {
+          stopStream()
+        } else {
+          startStream()
+        }
+      }
+
+      enrollButton.onclick = () => {
+        updateConfig(enrollButton)
+      }
+
+      // Attach default on change action
+      document
+        .querySelectorAll('.default-action')
+        .forEach(el => {
+          el.onchange = () => updateConfig(el)
+        })
+
+
+      // Detection and framesize
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const framesize = document.getElementById('framesize')
+
+      framesize.onchange = () => {
+        updateConfig(framesize)
+        if (framesize.value > 4) {
+          updateValue(detect, false)
+          updateValue(recognize, false)
+        }
+      }
+
+      if (framesize.value > 4) {
+        alert("Please select CIF or lower resolution before enabling this feature!");
+        updateValue(detect, false)
+        updateValue(recognize, false)
+        return;
+      }
+
+      detect.checked = true;
+      updateConfig(detect)
+      recognize.checked = true;
+      updateConfig(recognize)
+
+      if (!detect.checked) {
+        disable(enrollButton)
+        updateValue(recognize, false)
+      }
+
+      if (recognize.checked) {
+        enable(enrollButton)
+        updateValue(detect, true)
+      }
+      else {
+        disable(enrollButton)
+      }
+    })
+
+    /* :::::::::::::::::::::::::::::::::::::::::::::::: Start and stop the timer */
+    function start_timer() {
+      myTmr = setInterval(myTimer, 500)
+    }
+
+    function stop_timer() {
+      clearInterval(myTmr)
+    }
+
+    /* :::::::::::::::::::::::::::::::::::::::::::::::: Timer to get QR Code reading result and display it. */
+    function myTimer() {
+      // enrollButton.onclick = () => {
+      //   updateConfig(enrollButton)
+      // }
+      getLockerVal();
+      getQRCodeVal();
+      getDisableLockerVal();
+      const showqrcodeval = document.getElementById('showqrcodeval');
+      showqrcodeval.innerHTML = qrcodeval;
+      disable_locker();
+      reloadHandle();
+    }
+
+    function getLockerVal() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          lockerval = this.responseText;
+        }
+      };
+      xhttp.open("GET", "/getlockerval", true);
+      xhttp.send();
+    }
+
+    function getDisableLockerVal() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          disablelockerval = this.responseText;
+        }
+      };
+      xhttp.open("GET", "/getdisablelockerval", true);
+      xhttp.send();
+    }
+
+    var time = 0;
+    function disable_locker() {
+      const locker_1    = document.getElementById('locker1');
+      const locker_2    = document.getElementById('locker2');
+      const locker_3    = document.getElementById('locker3');
+      const locker_4    = document.getElementById('locker4');
+      const locker_1_qr = document.getElementById('locker1qr');
+      const locker_2_qr = document.getElementById('locker2qr');
+      const locker_3_qr = document.getElementById('locker3qr');
+      const locker_4_qr = document.getElementById('locker4qr');
+
+      if (lockerval == 0 && a == 1) {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        a = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "K," + "1";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_transmit_locker_1();
+      }
+      if (lockerval == 1 && a == 2) {
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        a = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "L," + "1";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_transmit_locker_2();
+      }
+      if (lockerval == 2 && a == 3) {
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        a = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "M," + "1";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_transmit_locker_3();
+      }
+      if (lockerval == 3 && a == 4) {
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+        a = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "N," + "1";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_transmit_locker_4();
+      }
+
+      /*-----------------------------------------------------------*/
+      if (disablelockerval == 12340000) 
+      {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+      }
+
+      if (disablelockerval == 12341000) 
+      {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+      }
+
+      if (disablelockerval == 12340100) 
+      {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+      }
+
+      if (disablelockerval == 12340010) 
+      {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+      }
+
+      if (disablelockerval == 12340001) 
+      {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+      }
+
+      if (disablelockerval == 12341001) 
+      {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+      }
+
+      if (disablelockerval == 12340101) 
+      {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+      }
+
+      if (disablelockerval == 12341010) 
+      {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+      }
+
+      if (disablelockerval == 12341100) 
+      {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+      }
+
+      if (disablelockerval == 12340110) 
+      {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+      }
+
+      if (disablelockerval == 12340011) 
+      {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+      }
+
+      if (disablelockerval == 12341110) 
+      {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+      }
+
+      if (disablelockerval == 12341101) 
+      {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+      }
+
+      if (disablelockerval == 12340111) 
+      {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+      }
+
+      if (disablelockerval == 12341011) 
+      {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+      }
+
+      if (disablelockerval == 12341111) 
+      {
+        locker_1.disabled = true;
+        locker_1_qr.disabled = true;
+        locker_2.disabled = true;
+        locker_2_qr.disabled = true;
+        locker_3.disabled = true;
+        locker_3_qr.disabled = true;
+        locker_4.disabled = true;
+        locker_4_qr.disabled = true;
+      }
+      /*-----------------------------------------------------------*/
+
+      if (lockerval == -10 && b == 1) {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        b = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "K," + "0";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_1(); 
+      }
+      if (lockerval == -11 && b == 1) {
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        b = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "L," + "0";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_2(); 
+      }
+      if (lockerval == -12 && b == 1) {
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        b = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "M," + "0";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_3(); 
+      }
+      if (lockerval == -13 && b == 1) {
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+        b = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "N," + "0";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_4(); 
+      }
+
+      if (lockerval == -10 && e == 1) {
+        locker_1.disabled = false;
+        locker_1_qr.disabled = false;
+        e = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "K," + "0";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_1(); 
+      }
+      if (lockerval == -11 && e == 1) {
+        locker_2.disabled = false;
+        locker_2_qr.disabled = false;
+        e = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "L," + "0";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_2(); 
+      }
+      if (lockerval == -12 && e == 1) {
+        locker_3.disabled = false;
+        locker_3_qr.disabled = false;
+        e = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "M," + "0";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_3(); 
+      }
+      if (lockerval == -13 && e == 1) {
+        locker_4.disabled = false;
+        locker_4_qr.disabled = false;
+        e = 0;
+        setTimeout(function() {
+          let btn_cmd3 = "N," + "0";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_4(); 
+      }
+    }
+
+    function getQRCodeVal() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            qrcodeval = this.responseText;
+          }
+        };
+        xhttp.open("GET", "/getqrcodeval", true);
+        xhttp.send();
+      }
+
+      
+    function send_cmd(cmds) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/action?go=" + cmds, true);
+      xhr.send();
+    }
+
+    function showEmergencyOptions() {
+    
+      const passwordOption = document.getElementById("password-options");
+      const emergency = document.getElementById("emergency");
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const faceOptions = document.getElementById('options-face');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const locker_1 = document.getElementById('locker1');
+      const locker_2 = document.getElementById('locker2');
+      const locker_3 = document.getElementById('locker3');
+      const locker_4 = document.getElementById('locker4');
+      const infoPass = document.getElementById('errorMessage');
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      passwordOption.style.display = 'block';
+      emergency.style.display = 'none';
+      infoPass.innerHTML= '';
+      
+
+      for (let backButton of backButtons) {
+        backButton.style.display = 'inline-block';
+      }   
+    }
+ 
+    function sendPassword() {
+      var inputPassword = document.getElementById("inputPassword") // Lấy giá trị từ ô nhập liệu
+      const infoPass = document.getElementById('errorMessage');
+
+      if(inputPassword.value == "12344321")
+      {
+        const passwordOption = document.getElementById("password-options");
+        const emergency = document.getElementById("emergency");
+        const sendButton = document.querySelector('.green');
+        const imgLocker = document.getElementById('img-locker');
+        const retrieveButton = document.querySelector('.yellow');
+        const sendFaceOptions = document.getElementById('sendFaceOptions');
+        const faceOptions = document.getElementById('options-face');
+        const chooseOptions = document.getElementById('chooseOptions');
+        const backButtons = document.querySelectorAll('.back-button');
+        const locker_1 = document.getElementById('locker1');
+        const locker_2 = document.getElementById('locker2');
+        const locker_3 = document.getElementById('locker3');
+        const locker_4 = document.getElementById('locker4');
+
+        const unlockOptions = document.getElementById('unlock-options');
+        const unlocker1E = document.getElementById('unlocker1E');
+        const unlocker2E = document.getElementById('unlocker2E');
+        const unlocker3E= document.getElementById('unlocker3E');
+        const unlocker4E = document.getElementById('unlocker4E');
+        
+
+
+        var greeting = document.getElementById('greeting');
+        var thankyou = document.getElementById('thankyou');
+        greeting.style.display = 'none';
+        thankyou.style.display = 'none';
+        sendButton.style.display = 'none';
+        retrieveButton.style.display = 'none';
+        faceOptions.style.display = 'none';
+        chooseOptions.style.display = 'none';
+        sendFaceOptions.style.display = 'none';
+        passwordOption.style.display = 'none';
+        emergency.style.display = 'none';
+        imgLocker.style.display = 'none';
+        unlockOptions.style.display = 'block';
+        infoPass.style.display = 'none';
+      }
+      else
+      {
+        showEmergencyOptions();
+        infoPass.style.display = 'block';
+        infoPass.innerHTML = 'error';
+        unlockOptions.style.display = 'none';    
+      }
+      
+
+
+      for (let backButton of backButtons) {
+        backButton.style.display = 'inline-block';
+      }   
+    }
+
+    function unlockerNumber1() {
+      setTimeout(function() {
+          let btn_cmd3 = "X," + "1";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_1(); 
+    }
+
+    function unlockerNumber2() {
+      setTimeout(function() {
+          let btn_cmd3 = "Y," + "1";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_2(); 
+    }
+
+    function unlockerNumber3() {
+      setTimeout(function() {
+          let btn_cmd3 = "Z," + "1";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_3();
+    }
+
+    function unlockerNumber4() {
+      setTimeout(function() {
+          let btn_cmd3 = "T," + "1";
+          send_cmd(btn_cmd3);
+          goHomeFromTick();
+        }, 2000);
+        notification_receive_locker_4();
+    }
+
+    /*-----------------------------------GỬI ĐỒ----------------------------------*/
+
+    function showSendOptions() {
+      let btn_cmd = "A," + "-1";
+      send_cmd(btn_cmd);
+      let btn_cmd2 = "D," + "0";
+      send_cmd(btn_cmd2);
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const imgLocker = document.getElementById('img-locker');
+      const faceOptions = document.getElementById('options-face');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+      const backButtons2 = document.querySelectorAll('.back-button2');
+      const locker_1 = document.getElementById('locker1');
+      const locker_2 = document.getElementById('locker2');
+      const locker_3 = document.getElementById('locker3');
+      const locker_4 = document.getElementById('locker4');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      var passwordOption = document.getElementById("password-options");
+      var emergency = document.getElementById("emergency");
+      passwordOption.style.display = 'none';
+      emergency.style.display = 'none';
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+      ticks.style.display = 'none';
+
+      chooseOptions.style.display = 'block';
+      imgLocker.style.display = 'none';
+      chooseFaceButton.style.display = 'inline-block';
+      chooseQrButton.style.display = 'inline-block';
+      sendFaceOptions.style.display = 'none';
+
+      c = 1;
+
+      for (let backButton of backButtons2) {
+        backButton.style.display = 'inline-block';
+      }
+    }
+
+
+    function chooseFaceOptions() {
+      let btn_cmd1 = "G," + "0";
+        send_cmd(btn_cmd1);
+      let btn_cmd2 = "D," + "0";
+        send_cmd(btn_cmd2);
+     
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const faceOptions = document.getElementById('options-face');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const locker_1 = document.getElementById('locker1');
+      const locker_2 = document.getElementById('locker2');
+      const locker_3 = document.getElementById('locker3');
+      const locker_4 = document.getElementById('locker4');
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      // receiveFaceButton.style.display = 'none';
+      // receiveQrButton.style.display = 'none';
+      sendFaceOptions.style.display = 'block';
+
+      for (let backButton of backButtons) {
+        backButton.style.display = 'inline-block';
+      }
+    }
+
+    function chooseQrOptions() {
+      //disable_locker();
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const faceOptions = document.getElementById('options-face');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const generateQr = document.getElementById('generateQr');
+      const backButtons = document.querySelectorAll('.back-button');
+      const locker_1 = document.getElementById('locker1');
+      const locker_2 = document.getElementById('locker2');
+      const locker_3 = document.getElementById('locker3');
+      const locker_4 = document.getElementById('locker4');
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'block';
+      generateQr.style.display = 'none';
+
+      for (let backButton of backButtons) {
+        backButton.style.display = 'inline-block';
+      }
+    }
+
+    function openFaceID(cmds) {
+      let btn_cmd = "B," + cmds;
+      send_cmd(btn_cmd);
+      const locker_1 = document.getElementById('locker1');
+      const locker_2 = document.getElementById('locker2');
+      const locker_3 = document.getElementById('locker3');
+      const locker_4 = document.getElementById('locker4');
+
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const faceOptions = document.getElementById('options-face');
+      const backButtons = document.querySelectorAll('.back-button');
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const detect_group = document.getElementById('face_detect-group')
+      const recognize_group = document.getElementById('face_recognize-group')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'block';
+      sendFaceOptions.style.display = 'none';
+
+      detect_group.style.display = 'none'
+      recognize_group.style.display = 'none'
+      enrollButton.style.display = 'block';
+      streamButton.style.display = 'block';
+      show(viewContainer);
+
+      for (let backButton of backButtons) {
+        backButton.style.display = 'inline-block';
+      }
+    }
+
+    function openQrCode(cmds) {
+      let btn_cmd = "B," + cmds;
+      send_cmd(btn_cmd);
+      const locker_1 = document.getElementById('locker1');
+      const locker_2 = document.getElementById('locker2');
+      const locker_3 = document.getElementById('locker3');
+      const locker_4 = document.getElementById('locker4');
+
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const faceOptions = document.getElementById('options-face');
+      const backButtons = document.querySelectorAll('.back-button');
+      const backButtons2 = document.querySelectorAll('.back-button2');
+      const generateQr = document.getElementById('generateQr');
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const detect_group = document.getElementById('face_detect-group')
+      const recognize_group = document.getElementById('face_recognize-group')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      generateQr.style.display = 'block';
+
+      detect_group.style.display = 'none'
+      recognize_group.style.display = 'none'
+      enrollButton.style.display = 'none';
+    }
+ 
+    /*-----------------------------------LẤY ĐỒ----------------------------------*/
+    function showRetrieveOptions() {
+      let btn_cmd = "A," + "-1";
+      send_cmd(btn_cmd);
+      let btn_cmd1 = "B," + "LOCKER";
+      send_cmd(btn_cmd1);
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const imgLocker = document.getElementById('img-locker');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const backButtons = document.querySelectorAll('.back-button');
+      const backButtons2 = document.querySelectorAll('.back-button2');
+      const receiveButton1 = document.querySelector('.receive1');
+      const receiveButton2 = document.querySelector('.receive2');
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      var passwordOption = document.getElementById("password-options");
+      var emergency = document.getElementById("emergency");
+      passwordOption.style.display = 'none';
+      emergency.style.display = 'none';
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      imgLocker.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+      ticks.style.display = 'none';
+
+      qrcamera.style.display = 'none';
+
+      retrieveOptions.style.display = 'block';
+      receiveButton1.style.display = 'inline-block';
+      receiveButton2.style.display = 'inline-block';
+
+      for (let backButton of backButtons2) {
+        backButton.style.display = 'inline-block';
+      }
+
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }
+
+    function receiveFaceID(cmds) {
+      let btn_cmd2 = "C," + cmds;
+      send_cmd(btn_cmd2);
+      const locker_1 = document.getElementById('locker1');
+      const locker_2 = document.getElementById('locker2');
+      const locker_3 = document.getElementById('locker3');
+      const locker_4 = document.getElementById('locker4');
+
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const receiveButton1 = document.querySelector('.receive1');
+      const receiveButton2 = document.querySelector('.receive2');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const faceOptions = document.getElementById('options-face');
+      const backButtons = document.querySelectorAll('.back-button');
+      const backButtons2 = document.querySelectorAll('.back-button2');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const detect_group = document.getElementById('face_detect-group')
+      const recognize_group = document.getElementById('face_recognize-group')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      receiveButton1.style.display = 'none';
+      receiveButton2.style.display = 'none';
+      faceOptions.style.display = 'block';
+      sendFaceOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+      enrollButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+      ticks.style.display = 'none';
+
+      detect_group.style.display = 'none'
+      recognize_group.style.display = 'none'
+  
+      for (let backButton of backButtons) {
+        backButton.style.display = 'inline-block';
+      }
+      for (let backButton of backButtons2) {
+        backButton.style.display = 'none';
+      }
+    }
+
+    function receiveQrCode() {
+      e = 1;
+      const locker_1 = document.getElementById('locker1');
+      const locker_2 = document.getElementById('locker2');
+      const locker_3 = document.getElementById('locker3');
+      const locker_4 = document.getElementById('locker4');
+
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const receiveButton1 = document.querySelector('.receive1');
+      const receiveButton2 = document.querySelector('.receive2');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const faceOptions = document.getElementById('options-face');
+      const backButtons = document.querySelectorAll('.back-button');
+      const backButtons2 = document.querySelectorAll('.back-button2');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      
+      const showqrcodeval = document.getElementById('showqrcodeval')
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const detect_group = document.getElementById('face_detect-group')
+      const recognize_group = document.getElementById('face_recognize-group')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      receiveButton1.style.display = 'none';
+      receiveButton2.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+      enrollButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+      ticks.style.display = 'none';
+
+      detect_group.style.display = 'none'
+      recognize_group.style.display = 'none'
+
+      qrcamera.style.display = 'block'
+      window.onload = qrstream.src = window.location.href.slice(0, -1) + ":81/qr_reader";
+      //qrstream.src = document.location.origin + ":81/qr_reader";
+      // var baseHost = document.location.origin
+      // var streamUrl = baseHost + ':81'
+      showqrcodeval.innerHTML = qrcodeval;
+
+      for (let backButton of backButtons) {
+        backButton.style.display = 'inline-block';
+      }
+      for (let backButton of backButtons2) {
+        backButton.style.display = 'none';
+      }
+    }
+
+
+    /*-----------------------------------QUAY VỀ TRANG CHỦ----------------------------------*/
+    function goHome() {
+      let btn_cmd = "D," + "0";
+      send_cmd(btn_cmd);
+      c = 0;
+      d = 0;
+      e = 0;
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      const imgLocker = document.getElementById('img-locker');
+      const passwordOption = document.getElementById("password-options");
+      const emergency = document.getElementById("emergency");
+      const unlockOptions = document.getElementById('unlock-options');
+      const unlocker1E = document.getElementById('unlocker1E');
+      const unlocker2E = document.getElementById('unlocker2E');
+      const unlocker3E= document.getElementById('unlocker3E');
+      const unlocker4E = document.getElementById('unlocker4E');
+      var inputPassword = document.getElementById("inputPassword")
+      var infoPass = document.getElementById("infoPass")
+      
+
+      imgLocker.style.display = 'block'; 
+      emergency.style.display = 'block';
+      inputPassword.value = "";
+      unlockOptions.style.display = 'none';
+      passwordOption.style.display = 'none';
+      
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+      greeting.style.display = 'block';
+      thankyou.style.display = 'block';
+      sendButton.style.display = 'inline-block';
+      retrieveButton.style.display = 'inline-block';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+      ticks.style.display = 'none';
+
+      qrcamera.style.display = 'none';
+
+      countdownTime = -1;
+      countdownElement.textContent = "";  
+      displayQrText.textContent = "";         
+      qrcodebox.innerHTML = "";
+
+      
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+      hide(viewContainer);
+
+      qrstream.src = NULL;
+      hide(qrcamera);
+      
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }  
+    }
+
+    function goHomeFromTick() {
+      let btn_cmd1 = "D," + "0";
+      send_cmd(btn_cmd1);
+
+      c = 0;
+      d = 0;
+      //e = 0;
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      const imgLocker = document.getElementById('img-locker');
+      const passwordOption = document.getElementById("password-options");
+      const emergency = document.getElementById("emergency");
+      const unlockOptions = document.getElementById('unlock-options');
+      const unlocker1E = document.getElementById('unlocker1E');
+      const unlocker2E = document.getElementById('unlocker2E');
+      const unlocker3E= document.getElementById('unlocker3E');
+      const unlocker4E = document.getElementById('unlocker4E');
+      var inputPassword = document.getElementById("inputPassword")
+      var infoPass = document.getElementById("infoPass")
+
+      imgLocker.style.display = 'block';
+      emergency.style.display = 'block';
+      inputPassword.value = "";
+      unlockOptions.style.display = 'none';
+      passwordOption.style.display = 'none';
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+      greeting.style.display = 'block';
+      thankyou.style.display = 'block';
+      sendButton.style.display = 'inline-block';
+      retrieveButton.style.display = 'inline-block';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+      ticks.style.display = 'none';
+
+      qrcamera.style.display = 'none';
+
+      countdownTime = -1;
+      countdownElement.textContent = "";  
+      displayQrText.textContent = "";         
+      qrcodebox.innerHTML = "";
+
+      
+      streamButton.innerHTML = 'Start Stream';
+
+      qrstream.src = NULL;
+      hide(qrcamera);
+      
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }     
+    }
+
+    function goHome2() {
+      // let btn_cmd = "G," + "0";
+      // send_cmd(btn_cmd);
+      let btn_cmd1 = "D," + "0";
+      send_cmd(btn_cmd1);
+      // let btn_cmd2 = "I," + "1";
+      // send_cmd(btn_cmd2);
+
+      c = 0;
+      d = 0;
+      e = 0;
+
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      const imgLocker = document.getElementById('img-locker')
+
+      const passwordOption = document.getElementById("password-options");
+      const emergency = document.getElementById("emergency");
+      const unlockOptions = document.getElementById('unlock-options');
+      const unlocker1E = document.getElementById('unlocker1E');
+      const unlocker2E = document.getElementById('unlocker2E');
+      const unlocker3E= document.getElementById('unlocker3E');
+      const unlocker4E = document.getElementById('unlocker4E');
+      var inputPassword = document.getElementById("inputPassword")
+      var infoPass = document.getElementById("infoPass")
+      
+
+      imgLocker.style.display = 'block'; 
+      emergency.style.display = 'block';
+      inputPassword.value = "";
+      unlockOptions.style.display = 'none';
+      passwordOption.style.display = 'none';
+
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+      greeting.style.display = 'block';
+      thankyou.style.display = 'block';
+      sendButton.style.display = 'inline-block';
+      retrieveButton.style.display = 'inline-block';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+      ticks.style.display = 'none';
+
+      qrcamera.style.display = 'none';
+
+      countdownTime = -1;
+      countdownElement.textContent = "";  
+      displayQrText.textContent = "";         
+      qrcodebox.innerHTML = "";
+      
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+      hide(viewContainer);
+
+      // qrstream.src = NULL;
+      // hide(qrcamera);
+
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+      
+    }
+
+    
+
+
+    /*-----------------------------------LÙI LẠI FACE ID----------------------------------*/
+    function goBackFromSendFace() {
+      //disable_locker();
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+      const imgLocker = document.getElementById('img-locker');
+      imgLocker.style.display = 'none';
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'block';
+      retrieveOptions.style.display = 'none';
+
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+      hide(viewContainer);
+
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'inline-block';
+      }
+    }
+
+
+    /*-----------------------------------LÙI LẠI QR CODE----------------------------------*/
+    function goBackFromSendQr() {
+      chooseQrOptions();
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+      const imgLocker = document.getElementById('img-locker');
+      imgLocker.style.display = 'none';
+
+      c = 0;
+      d = 0;
+      e = 0;
+
+      countdownTime = -1;
+      countdownElement.textContent = "";  
+      displayQrText.textContent = "";         
+      qrcodebox.innerHTML = "";
+      var randomValue = NULL;
+      new QRCode(qrcodebox, {
+          text:randomValue,
+          height:size,
+          width:size,
+          colorLight:"#fff",
+          colorDark:"#000",
+      }) 
+      clearInterval(countdownInterval);
+      countdownInterval = null;      
+    }
+
+
+    /*--------------------------------LÙI LẠI TỪ TRANG NHẬN ĐỒ------------------------------*/
+    function goBackFromReceive() {
+      //disable_locker();
+      e = 0;
+      showRetrieveOptions();
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      streamButton.innerHTML = 'Start Stream';
+      const imgLocker = document.getElementById('img-locker');
+      imgLocker.style.display = 'none';
+      
+      window.stop();
+      hide(viewContainer);    
+    }
+
+    /*--------------------------------TẠO MÃ QR NGẪU NHIÊN------------------------------*/
+    function generateQRCode(){
+        const qrText=document.getElementById('qr_text');
+        const generate=document.getElementById('generate');
+        const qrcodebox=document.querySelector('.body-qr');
+        const countdownElement = document.getElementById("countdown");
+        const displayQrText = document.getElementById("QrText");
+
+        const locker_1    = document.getElementById('locker1');
+        const locker_2    = document.getElementById('locker2');
+        const locker_3    = document.getElementById('locker3');
+        const locker_4    = document.getElementById('locker4');
+        const locker_1_qr = document.getElementById('locker1qr');
+        const locker_2_qr = document.getElementById('locker2qr');
+        const locker_3_qr = document.getElementById('locker3qr');
+        const locker_4_qr = document.getElementById('locker4qr');
+
+        let size = 300;
+        countdownInterval = null;
+        generate.style.display = 'none';
+
+        qrcodebox.innerHTML = "";
+        var randomValue = "SMART-" + Math.floor(Math.random() * 10000) + "/LOCKER-" + Math.floor(Math.random() * 10000);  
+        displayQrText.textContent = randomValue;
+        let btn_cmd = "E," + randomValue;
+        send_cmd(btn_cmd);
+
+        new QRCode(qrcodebox, {
+            text:randomValue,
+            height:size,
+            width:size,
+            colorLight:"#fff",
+            colorDark:"#000",
+        });  
+        countdownTime = 15;
+        // Đếm ngược và xóa mã QR code sau 5 giây 
+        countdownElement.textContent = "Thời gian còn lại: " + countdownTime + "s";
+        countdownInterval = setInterval(function() {
+          countdownTime--;
+          
+          countdownElement.textContent = "Thời gian còn lại: " + countdownTime + "s";
+          if (countdownTime === 0) 
+          { 
+            let btn_cmd1 = "F," + "1";
+            send_cmd(btn_cmd1);
+            countdownElement.textContent = "";  
+            displayQrText.textContent = "";         
+            qrcodebox.innerHTML = "";
+            var randomValue = NULL;
+            new QRCode(qrcodebox, {
+                text:randomValue,
+                height:size,
+                width:size,
+                colorLight:"#fff",
+                colorDark:"#000",
+            })              
+        }
+
+        if(countdownTime < 0)
+          {
+            countdownElement.textContent = ""; 
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            generate.style.display = 'block';
+            if(c != 0)
+            {
+              if (d == 1) {
+                locker_1.disabled = true;
+                locker_1_qr.disabled = true;
+                c = 0;
+                d = 0;
+                setTimeout(function() {
+                  let btn_cmd = "K," + "1";
+                  send_cmd(btn_cmd);
+                  goHomeFromTick();
+                }, 2000);
+                notification_transmit_locker_1();
+              }
+              if (d == 2) {
+                locker_2.disabled = true;
+                locker_2_qr.disabled = true;
+                c = 0;
+                d = 0;
+                setTimeout(function() {
+                  let btn_cmd = "L," + "1";
+                  send_cmd(btn_cmd);
+                  goHomeFromTick();
+                }, 2000);
+                notification_transmit_locker_2();
+              }
+              if (d == 3) {
+                locker_3.disabled = true;
+                locker_3_qr.disabled = true;
+                c = 0;
+                d = 0;
+                setTimeout(function() {
+                  let btn_cmd = "M," + "1";
+                  send_cmd(btn_cmd);
+                  goHomeFromTick();
+                }, 2000);
+                notification_transmit_locker_3();
+              }
+              if (d == 4) {
+                locker_4.disabled = true;
+                locker_4_qr.disabled = true;
+                c = 0;
+                d = 0;
+                setTimeout(function() {
+                  let btn_cmd = "N," + "1";
+                  send_cmd(btn_cmd);
+                  goHomeFromTick();
+                }, 2000);
+                notification_transmit_locker_4();
+              }
+            }
+          }
+        }, 1000);
+    };
+
+
+    /*----------------------------HIỂN THỊ THÔNG BÁO GỬI ĐỒ---------------------------*/
+    function notification_transmit_locker_1(){
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'block';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+
+      ticks.style.display = 'block';
+      
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }
+
+    function notification_transmit_locker_2(){
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'block';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+
+      ticks.style.display = 'block';
+      
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }
+
+    function notification_transmit_locker_3(){
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'block';
+      notificationTx4.style.display = 'none';
+
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+
+      ticks.style.display = 'block';
+      
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }
+
+    function notification_transmit_locker_4(){
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'block';
+
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+
+      ticks.style.display = 'block';
+      
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }
+
+
+    /*----------------------------HIỂN THỊ THÔNG BÁO LẤY ĐỒ---------------------------*/
+    function notification_receive_locker_1(){
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      const unlockOptions = document.getElementById('unlock-options');
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+
+      notificationRx1.style.display = 'block';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+      unlockOptions.style.display = 'none';
+
+      ticks.style.display = 'block';
+    
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+
+      qrcamera.style.display = 'none';
+      qrstream.src = NULL;
+      hide(qrcamera);
+
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }
+
+    function notification_receive_locker_2(){
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      const unlockOptions = document.getElementById('unlock-options');
+
+      unlockOptions.style.display = 'none';
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'block';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'none';
+
+      ticks.style.display = 'block';
+    
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+
+      qrcamera.style.display = 'none';
+      qrstream.src = NULL;
+      hide(qrcamera);
+
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }
+
+    function notification_receive_locker_3(){
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      const unlockOptions = document.getElementById('unlock-options');
+
+      unlockOptions.style.display = 'none';
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'block';
+      notificationRx4.style.display = 'none';
+
+      ticks.style.display = 'block';
+      
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+
+      qrcamera.style.display = 'none';
+      qrstream.src = NULL;
+      hide(qrcamera);
+
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }
+
+    function notification_receive_locker_4(){
+      const sendButton = document.querySelector('.green');
+      const retrieveButton = document.querySelector('.yellow');
+      const sendFaceOptions = document.getElementById('sendFaceOptions');
+      const sendQrOptions = document.getElementById('sendQrOptions');
+      const retrieveOptions = document.getElementById('retrieveOptions');
+      const faceOptions = document.getElementById('options-face');
+      const answerOptions = document.getElementById('answerOptions');
+      const backButtons = document.querySelectorAll('.back-button');
+      const chooseOptions = document.getElementById('chooseOptions');
+      const chooseFaceButton = document.querySelector('.chooseFace');
+      const chooseQrButton = document.querySelector('.chooseQr');
+
+      const generateQr = document.getElementById('generateQr');
+
+      const qrText=document.getElementById('qr_text');
+      const generate=document.getElementById('generate');
+      const qrcodebox=document.querySelector('.body-qr');
+      const countdownElement = document.getElementById("countdown");
+      const displayQrText = document.getElementById("QrText");
+
+      const view = document.getElementById('stream')
+      const viewContainer = document.getElementById('stream-container')
+      const streamButton = document.getElementById('toggle-stream')
+      const detect = document.getElementById('face_detect')
+      const recognize = document.getElementById('face_recognize')
+      const enrollButton = document.getElementById('face_enroll')
+
+      var greeting = document.getElementById('greeting');
+      var thankyou = document.getElementById('thankyou');
+
+      const notificationTx1 = document.getElementById('notificationTx1')
+      const notificationTx2 = document.getElementById('notificationTx2')
+      const notificationTx3 = document.getElementById('notificationTx3')
+      const notificationTx4 = document.getElementById('notificationTx4')
+      const notificationRx1 = document.getElementById('notificationRx1')
+      const notificationRx2 = document.getElementById('notificationRx2')
+      const notificationRx3 = document.getElementById('notificationRx3')
+      const notificationRx4 = document.getElementById('notificationRx4')
+      const ticks = document.getElementById('ticks')
+
+      const qrcamera = document.getElementById('qrCamera')
+      const qrstream = document.getElementById('qrstream')
+      const unlockOptions = document.getElementById('unlock-options');
+
+      unlockOptions.style.display = 'none';
+
+      greeting.style.display = 'none';
+      thankyou.style.display = 'none';
+      sendButton.style.display = 'none';
+      retrieveButton.style.display = 'none';
+      faceOptions.style.display = 'none';
+      sendFaceOptions.style.display = 'none';
+      sendQrOptions.style.display = 'none';
+      retrieveOptions.style.display = 'none';
+
+      generateQr.style.display = 'none';
+      chooseOptions.style.display = 'none';
+      chooseFaceButton.style.display = 'none';
+      chooseQrButton.style.display = 'none';
+
+      notificationTx1.style.display = 'none';
+      notificationTx2.style.display = 'none';
+      notificationTx3.style.display = 'none';
+      notificationTx4.style.display = 'none';
+
+      notificationRx1.style.display = 'none';
+      notificationRx2.style.display = 'none';
+      notificationRx3.style.display = 'none';
+      notificationRx4.style.display = 'block';
+
+      ticks.style.display = 'block';
+      
+      streamButton.innerHTML = 'Start Stream';
+      window.stop();
+
+      qrcamera.style.display = 'none';
+      qrstream.src = NULL;
+      hide(qrcamera);
+
+      if (answerOptions) {
+        answerOptions.remove();
+      }
+      for (let backButton of backButtons) {
+        backButton.style.display = 'none';
+      }
+    }   
+
+  </script>
+</body>
+
+</html>
